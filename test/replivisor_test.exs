@@ -9,7 +9,6 @@ defmodule ReplivisorTest do
 	db = Server.init_db
 	result = Server.init_track_changes db
 	IO.puts "db: #{inspect(db)}" 
-
 	assert(true)
 
   end

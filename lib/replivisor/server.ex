@@ -1,6 +1,11 @@
 defmodule Replivisor.Server do
 	use GenServer.Behaviour
 
+	def start_link do
+		:gen_server.start_link({:local, __MODULE__}, __MODULE__, [], [])	
+	end
+
+
 	def init(state) do
 		IO.puts "init called"
 		db = init_db
@@ -26,9 +31,10 @@ defmodule Replivisor.Server do
 		{:ok, last_seq, _rows} = :couchbeam_changes.fetch(db, [])
 		since_tuple = {:since,last_seq}
 		IO.puts "monitoring changes starting at seq: #{last_seq}"
-		#ChangesOptions = [continuous, heartbeat, SinceTuple],
-		#ServerPid = whereis(?MODULE),
-		#{ok, _StartRef, _ChangePid} = couchbeam_changes:stream(Db, ServerPid, ChangesOptions).
+		changes_options = [:continuous, :heartbeat, since_tuple]
+		server_pid = :erlang.whereis(__MODULE__)
+		IO.puts "server_pid: #{inspect(server_pid)}"
+		{:ok, _start_ref, _change_pid} = :couchbeam_changes.stream(db, server_pid, changes_options)
 	end
 
 end
