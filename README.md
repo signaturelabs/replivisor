@@ -21,12 +21,13 @@ Replivisor monitors CouchDB replications _from the outside_.  It watches the cha
 
 * Startup replivisor
 * Wait for change on source database
-* Spawn a process with that change which monitors target db _changes feed for change with that docid and revision id
+* Spawn a process which waits for 30 seconds, then queries target db to see if that revision (or a later one) is present on target db
 * If expected change seen on target db, log it.
 * If expected change not seen on target db within timeout, log an error.
 
 ## Limitations
 
+* Currently ignores deleted documents
 * Replivisor is not smart enough to monitor _filtered replications_.
 
 ## How to use it

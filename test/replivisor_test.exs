@@ -1,19 +1,16 @@
 Code.require_file "../test_helper.exs", __FILE__
 
 defmodule ReplivisorTest do
-
   use ExUnit.Case
+  alias Replivisor.Server, as: Server
 
-  test "the truth" do
+  test "experimenting" do
+	
+	db = Server.init_db
+	result = Server.init_track_changes db
+	IO.puts "db: #{inspect(db)}" 
 
-    options = []
-    server = :couchbeam.server_connection "localhost", 5984, "", options 
-    result = :couchbeam.server_info server
-
-    IO.puts "server: #{inspect(server)}"
-    IO.puts "result: #{inspect(result)}" 
-
-    assert(true)
+	assert(true)
 
   end
 end

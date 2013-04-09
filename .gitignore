@@ -1,3 +1,7 @@
 /ebin
 /deps
 erl_crash.dump
+# Emacs backup files
+*~
+# Emacs file locks
+.#*
