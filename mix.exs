@@ -14,10 +14,10 @@ defmodule Replivisor.Mixfile do
 
   # Returns the list of dependencies in the format:
   defp deps do
-    [{:mochiweb, ".*", git: "http://github.com/mochi/mochiweb.git"},
-     {:jiffy, ".*", git: "http://github.com/refuge/jiffy.git"},
-     {:oauth, ".*", git: "http://github.com/refuge/erlang-oauth.git"},
-     {:ibrowse, ".*", git: "http://github.com/cmullaparthi/ibrowse.git"},
-     {:couchbeam, ".*", git: "https://github.com/benoitc/couchbeam.git"}]
+    [{:mochiweb, "2.5.0", git: "http://github.com/mochi/mochiweb.git"},
+     {:jiffy, "0.3.0-37-g138bc88", git: "http://github.com/refuge/jiffy.git"},
+     {:oauth, "1.2.2", git: "http://github.com/refuge/erlang-oauth.git"},
+     {:ibrowse, "4.0.1", git: "http://github.com/cmullaparthi/ibrowse.git"},
+     {:couchbeam, "0.8.1", git: "https://github.com/benoitc/couchbeam.git"}]
   end
 end
