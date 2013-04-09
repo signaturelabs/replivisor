@@ -1,0 +1,5 @@
+[ "couchbeam": {:git,"https://github.com/benoitc/couchbeam.git","fa6e10b02db5bc4509f3fe8ffbc6cfcc9711fc06",[]},
+  "ibrowse": {:git,"http://github.com/cmullaparthi/ibrowse.git","69c94d3cf1db6382920f6b78fc9bea202c6ad8d7",[]},
+  "jiffy": {:git,"http://github.com/refuge/jiffy.git","138bc88078d81f9a1355bec39a0040f8e1a3d77f",[]},
+  "mochiweb": {:git,"http://github.com/mochi/mochiweb.git","15bc558d8222b011e2588efbd86c01d68ad73e60",[]},
+  "oauth": {:git,"http://github.com/refuge/erlang-oauth.git","109305111efd0f181c10819779ea554bb8096063",[]} ]
