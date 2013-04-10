@@ -20,14 +20,18 @@ defmodule Replivisor.Couchbeam do
 	end
 
 	def init_source_db(couchdb) do
-		{server, db} = init_db(couchdb.source_url, couchdb.source_port, couchdb.source_dbname)
+		{server, db} = init_db(couchdb.source_url, 
+                                       couchdb.source_port, 
+                                       couchdb.source_dbname,
+                                       couchdb.source_username,
+                                       couchdb.source_password)
 		couchdb = couchdb.couchbeam_server(server)
 		couchdb = couchdb.couchbeam_db(db)
 		couchdb
 	end
 
-	def init_db(db_url, db_port, dbname) do
-		options = []  #TODO:  Options = [{basic_auth, {?USERNAME, ?PASSWORD}}],
+	def init_db(db_url, db_port, dbname, username, password) do
+		options = if username, do: [{:basic_auth, {username, password}}], else: []
 		server = :couchbeam.server_connection(db_url, db_port, "", options)
 		db_options = []
 		{:ok, db} = :couchbeam.open_db(server, dbname, db_options)

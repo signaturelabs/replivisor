@@ -30,7 +30,11 @@ defmodule Replivisor.Changehandler do
 	end
 
 	def latest_rev_target_db(couchdb, doc_id) do
-		{server, db} = Couchbeam.init_db(couchdb.target_url, couchdb.target_port, couchdb.target_dbname)
+		{server, db} = Couchbeam.init_db(couchdb.target_url, 
+                                                 couchdb.target_port, 
+		                                 couchdb.target_dbname,
+		                                 couchdb.target_username,
+		                                 couchdb.target_password)
 		Couchbeam.lookup_revision_from_docid(db, doc_id)
 	end
 
