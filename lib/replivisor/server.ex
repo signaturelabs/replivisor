@@ -1,6 +1,8 @@
 defmodule Replivisor.Server do
 	use GenServer.Behaviour
 	alias Replivisor.Config, as: Config
+	alias Replivisor.Change, as: Change
+	alias Replivisor.Change.ChangeEntry, as: ChangeEntry
 
 	def start_link do
 		:gen_server.start_link({:local, __MODULE__}, __MODULE__, HashDict.new, [])	
@@ -25,12 +27,15 @@ defmodule Replivisor.Server do
 
 		IO.puts "handle_info called with: #{inspect(msg)}"
 
-		{:change, ref, _} = msg
-		IO.puts "ref: #{inspect(ref)}"
-
-		# TODO: lookup ref in statehash, and we'll know what db it is (I guess we'll have to put the target db being monitored in same record)
+		{:change, ref, raw_change} = msg
 		couchdb = HashDict.get(statehash, ref)
-		IO.puts "couchdb: #{inspect(couchdb)}"
+		change_entry = Change.create_change_entry(raw_change)
+
+		IO.puts "couchdb: #{inspect(couchdb)} change_entry: #{inspect(change_entry)}"
+
+		spawn fn ->
+		       Replivisor.Changehandler.handle_change(couchdb, change_entry)		      
+	        end
 
 		{ :noreply, statehash }
 	end

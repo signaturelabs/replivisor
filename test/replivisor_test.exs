@@ -6,6 +6,7 @@ defmodule ReplivisorTest do
   alias Replivisor.Config, as: Config
   alias Replivisor.Config.CouchDB, as: CouchDB
   alias Replivisor.Change, as: Change
+  alias Replivisor.Change.ChangeEntry, as: ChangeEntry
 
   test "experimenting" do
 	
@@ -37,6 +38,12 @@ defmodule ReplivisorTest do
 
   end
 
+  test "change handler" do
+        change_entry = ChangeEntry.new()
+        couchdbs = Config.databases
+        couchdb = Enum.at! couchdbs, 0
+        Replivisor.Changehandler.handle_change(couchdb, change_entry)
+  end
 
 
 end
