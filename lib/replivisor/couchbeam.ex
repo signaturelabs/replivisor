@@ -14,17 +14,22 @@ defmodule Replivisor.Couchbeam do
 
 	def monitor_couchdb(server_pid, couchdb) do
 		IO.puts "monitor: #{inspect(server_pid)} #{inspect(couchdb)}"
-		couchdb = init_db(couchdb)
+		couchdb = init_source_db(couchdb)
 		couchdb = init_track_changes(server_pid, couchdb)
 	end
 
-	def init_db(couchdb) do
-		options = []  # Options = [{basic_auth, {?USERNAME, ?PASSWORD}}],
-		server = :couchbeam.server_connection(couchdb.source_url, couchdb.source_port, "", options)
+	def init_source_db(couchdb) do
+		{server, db} = init_db(couchdb.source_url, couchdb.source_port, couchdb.source_dbname)
 		couchdb = couchdb.couchbeam_server(server)
-		db_options = []
-		{:ok, db} = :couchbeam.open_db(server, couchdb.source_dbname, db_options)
 		couchdb = couchdb.couchbeam_db(db)
+	end
+
+	def init_db(db_url, db_port, dbname) do
+		options = []  #TODO:  Options = [{basic_auth, {?USERNAME, ?PASSWORD}}],
+		server = :couchbeam.server_connection(db_url, db_port, "", options)
+		db_options = []
+		{:ok, db} = :couchbeam.open_db(server, dbname, db_options)
+		{server, db}
 	end
 
 	def init_track_changes(server_pid, couchdb) do
