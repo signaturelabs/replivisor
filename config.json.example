@@ -4,16 +4,24 @@
 "source_url": "localhost", 
 "source_port": 5984, 
 "source_dbname": "sigdb",
+"source_username": null,
+"source_password": null,
 "target_url": "localhost", 
 "target_port": 5984, 
-"target_dbname": "sigdb"
+"target_dbname": "sigdb",
+"target_username": null,
+"target_password": null
 },
 {
 "source_url": "localhost", 
 "source_port": 5984, 
 "source_dbname": "sigdb-prod",
+"source_username": null,
+"source_password": null,
 "target_url": "localhost", 
 "target_port": 5984, 
-"target_dbname": "sigdb-prod-copy"
+"target_dbname": "sigdb-prod-copy",
+"target_username": null,
+"target_password": null
 }
 ]
