@@ -31,7 +31,13 @@ defmodule Replivisor.Couchbeam do
 	end
 
 	def init_db(db_url, db_port, dbname, username, password) do
-		options = if username, do: [{:basic_auth, {username, password}}], else: []
+                if username do 
+			username_string = binary_to_list(username)  
+			password_string = binary_to_list(password)
+			options = [{:basic_auth, {username_string, password_string}}]
+		else
+			options = []
+		end
 		server = :couchbeam.server_connection(db_url, db_port, "", options)
 		db_options = []
 		{:ok, db} = :couchbeam.open_db(server, dbname, db_options)
