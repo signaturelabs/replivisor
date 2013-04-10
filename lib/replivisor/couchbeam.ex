@@ -19,11 +19,11 @@ defmodule Replivisor.Couchbeam do
 	end
 
 	def init_db(couchdb) do
-		options = []
-		server = :couchbeam.server_connection(couchdb.url, couchdb.port, "", options)
+		options = []  # Options = [{basic_auth, {?USERNAME, ?PASSWORD}}],
+		server = :couchbeam.server_connection(couchdb.source_url, couchdb.source_port, "", options)
 		couchdb = couchdb.couchbeam_server(server)
 		db_options = []
-		{:ok, db} = :couchbeam.open_db(server, couchdb.dbname, db_options)
+		{:ok, db} = :couchbeam.open_db(server, couchdb.source_dbname, db_options)
 		couchdb = couchdb.couchbeam_db(db)
 	end
 
