@@ -9,7 +9,9 @@ defmodule ReplivisorTest do
   test "experimenting" do
 	
 	couchdbs = Config.databases
-	Replivisor.Couchbeam.monitor_couchdb_list(self, couchdbs)
+	server_pid = self
+	statehash = Replivisor.Couchbeam.monitor_couchdb_list(server_pid, couchdbs)
+	IO.puts "statehash: #{inspect(statehash)}"
 
 	assert(true)
 

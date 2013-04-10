@@ -6,25 +6,16 @@ defmodule Replivisor.Server do
 		:gen_server.start_link({:local, __MODULE__}, __MODULE__, HashDict.new, [])	
 	end
 
-	def init(state) do
+	def init(statehash) do
 
 		# get the list of dbs we need to monitor from config
-
-		couchdb = Config.CouchDB.new(url: "myurl")
-		IO.puts "couchdb: #{inspect(couchdb)}"
+		couchdbs = Config.databases		
 
 		# loop over each one and start monitoring
+		server_pid = :erlang.whereis(__MODULE__)
+		statehash = Replivisor.Couchbeam.monitor_couchdb_list(server_pid, couchdbs)
 
-		# create a hashdict keyed on monitoring ref
-
-
-
-		IO.puts "init called with state: #{inspect(state)}"
-		db = init_db()
-		start_ref = init_track_changes(db)
-		state = HashDict.put(state, start_ref, :empty)
-		IO.puts "init returning state: #{inspect(state)}"
-		{ :ok, state }
+		{ :ok, statehash }
 	end
 
 	def handle_info(msg, state) do
@@ -35,25 +26,5 @@ defmodule Replivisor.Server do
 		{ :noreply, state }
 	end
 
-	def init_db do
-		options = []
-		server = :couchbeam.server_connection("localhost", 5984, "", options)
-		_result = :couchbeam.server_info(server)
-		db_options = []
-		{:ok, db} = :couchbeam.open_db(server, "sigdb", db_options)
-		db
-	end
-
-	def init_track_changes(db) do
-		{:ok, last_seq, _rows} = :couchbeam_changes.fetch(db, [])
-		since_tuple = {:since,last_seq}
-		IO.puts "monitoring changes starting at seq: #{last_seq}"
-		changes_options = [:continuous, :heartbeat, since_tuple]
-		server_pid = :erlang.whereis(__MODULE__)
-		IO.puts "server_pid: #{inspect(server_pid)}"
-		{:ok, start_ref, change_pid} = :couchbeam_changes.stream(db, server_pid, changes_options)
-		IO.puts "start_ref: #{inspect(start_ref)} change_pid: #{inspect(change_pid)}"
-		start_ref
-	end
 
 end
