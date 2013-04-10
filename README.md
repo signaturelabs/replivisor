@@ -33,6 +33,16 @@ Replivisor monitors CouchDB replications _from the outside_.  It watches the cha
 
 Edit config.ex with the settings of your source and target couch db's
 
+## Install elixir
+
+On OSX:
+
+```
+$ brew install elixir
+```
+
+See the "elixir-lang website":http://elixir-lang.org/getting_started/1.html for more details.
+
 ## Install replivisor
 
 ```
