@@ -45,7 +45,7 @@ $ mix test
 ## Run replivisor
 
 ```
-iex -S mix
+$ iex -S mix
 iex> Replivisor.Server.start_link
 ```
 
@@ -61,6 +61,6 @@ this means a change was not propagated to the target couchdb within the expected
 
 ## Setting up alerts
 
-In order to avoid re-inventing the wheel and in the name of keeping things focused and modular, replivisor does not have any built-in functionality for triggering alerts.  All it does is log to a file.
+In order to avoid re-inventing the wheel and in the name of keeping things focused and modular, replivisor does not have any built-in functionality for triggering alerts.  All it does is log to stdout.
 
 There are a million different ways to setup alerts.  One easy way would be to sign up for your favorite logging-as-a-service such as Loggly or Papertrail, and then send your logs to the service and setup search alerts.  
