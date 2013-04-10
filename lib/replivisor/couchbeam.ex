@@ -8,7 +8,7 @@ defmodule Replivisor.Couchbeam do
 		        couchdbs_hash = HashDict.put(couchdbs_hash, key, couchdb)
 		        {couchdb, couchdbs_hash}
 	        end
-		{couchdbs, couchdbs_hash} = Enum.map_reduce couchdbs, couchdbs_hash, f
+		{_, couchdbs_hash} = Enum.map_reduce couchdbs, couchdbs_hash, f
 		couchdbs_hash
 	end
 
@@ -16,12 +16,14 @@ defmodule Replivisor.Couchbeam do
 		IO.puts "monitor: #{inspect(server_pid)} #{inspect(couchdb)}"
 		couchdb = init_source_db(couchdb)
 		couchdb = init_track_changes(server_pid, couchdb)
+		couchdb
 	end
 
 	def init_source_db(couchdb) do
 		{server, db} = init_db(couchdb.source_url, couchdb.source_port, couchdb.source_dbname)
 		couchdb = couchdb.couchbeam_server(server)
 		couchdb = couchdb.couchbeam_db(db)
+		couchdb
 	end
 
 	def init_db(db_url, db_port, dbname) do
@@ -40,6 +42,7 @@ defmodule Replivisor.Couchbeam do
 		{:ok, start_ref, change_pid} = :couchbeam_changes.stream(couchdb.couchbeam_db, server_pid, changes_options)
 		couchdb = couchdb.couchbeam_changes_ref(start_ref)
 		couchdb = couchdb.couchbeam_change_pid(change_pid)
+		couchdb
 	end
 
 	def lookup_revision_from_docid(db, doc_id) do
