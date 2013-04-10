@@ -1,0 +1,19 @@
+
+[
+{
+"source_url": "localhost", 
+"source_port": 5984, 
+"source_dbname": "sigdb",
+"target_url": "localhost", 
+"target_port": 5984, 
+"target_dbname": "sigdb"
+},
+{
+"source_url": "localhost", 
+"source_port": 5984, 
+"source_dbname": "sigdb-prod",
+"target_url": "localhost", 
+"target_port": 5984, 
+"target_dbname": "sigdb-prod-copy"
+}
+]
