@@ -11,11 +11,9 @@ In our case, the impetus to build this tool came out of this scenario:
 * In the \_replicator database on Cloudant, the replication state was <code>triggered</code>, so our existing monitoring did not detect the issue.
 
 
-## How replivisor tries to solve the problem
+## How replivisor attempts to solve the problem
 
 Replivisor monitors CouchDB replications _from the outside_.  It watches the changes feed of both the source and the target databases, and makes sure that documents are making it to the target within a reasonable amount of time as defined by a threshold.
-
-[Architecture Diagram]
 
 ## Replivisor algorithm
 
