@@ -18,12 +18,21 @@ defmodule Replivisor.Server do
 		{ :ok, statehash }
 	end
 
-	def handle_info(msg, state) do
+	def handle_info(msg, statehash) do
 		# example msg
 		# {:change,#Reference<0.0.0.535>,
 		# {[{"seq",13182},{"id","00175475-1292-419A-B0C6-B1D457F29528"},{"changes",[{[{"rev","8-2eb257db8a15ada29cfda2eabe3b695d"}]}]}]}}
+
 		IO.puts "handle_info called with: #{inspect(msg)}"
-		{ :noreply, state }
+
+		{:change, ref, _} = msg
+		IO.puts "ref: #{inspect(ref)}"
+
+		# TODO: lookup ref in statehash, and we'll know what db it is (I guess we'll have to put the target db being monitored in same record)
+		couchdb = HashDict.get(statehash, ref)
+		IO.puts "couchdb: #{inspect(couchdb)}"
+
+		{ :noreply, statehash }
 	end
 
 

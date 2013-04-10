@@ -25,7 +25,6 @@ defmodule Replivisor.Couchbeam do
 		db_options = []
 		{:ok, db} = :couchbeam.open_db(server, couchdb.dbname, db_options)
 		couchdb = couchdb.couchbeam_db(db)
-		couchdb
 	end
 
 	def init_track_changes(server_pid, couchdb) do
@@ -36,7 +35,6 @@ defmodule Replivisor.Couchbeam do
 		{:ok, start_ref, change_pid} = :couchbeam_changes.stream(couchdb.couchbeam_db, server_pid, changes_options)
 		couchdb = couchdb.couchbeam_changes_ref(start_ref)
 		couchdb = couchdb.couchbeam_change_pid(change_pid)
-		couchdb
 	end
 
 end
