@@ -42,4 +42,17 @@ defmodule Replivisor.Couchbeam do
 		couchdb = couchdb.couchbeam_change_pid(change_pid)
 	end
 
+	def lookup_field_from_docid(db, fieldname, doc_id) do
+		doc_lookup_result = :couchbeam.open_doc(db, doc_id)
+		IO.puts "doc_lookup_result: #{inspect(doc_lookup_result)}"
+		case doc_lookup_result do 
+			{:ok, doc} ->
+			        :couchbeam_doc.get_value(fieldname, doc)
+                        {:error, _} ->
+			        IO.puts "doc lookup failed for #{doc_id}"
+			        nil
+		end
+	end
+
+
 end

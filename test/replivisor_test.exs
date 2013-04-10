@@ -7,13 +7,19 @@ defmodule ReplivisorTest do
   alias Replivisor.Config.CouchDB, as: CouchDB
   alias Replivisor.Change, as: Change
   alias Replivisor.Change.ChangeEntry, as: ChangeEntry
+  alias Replivisor.Couchbeam, as: Couchbeam
 
   test "experimenting" do
 	
 	couchdbs = Config.databases
 	server_pid = self
-	statehash = Replivisor.Couchbeam.monitor_couchdb_list(server_pid, couchdbs)
+	statehash = Couchbeam.monitor_couchdb_list(server_pid, couchdbs)
 	IO.puts "statehash: #{inspect(statehash)}"
+
+	couchdb = Enum.at! couchdbs, 0
+	{server, db} = Couchbeam.init_db(couchdb.target_url, couchdb.target_port, couchdb.target_dbname)
+	rev = Couchbeam.lookup_field_from_docid(db, "_rev", "0021C031-AF56-4F22-8357-C7F82ACBC512")
+	IO.puts "lookup rev: #{rev}"
 
 	assert(true)
 
