@@ -38,11 +38,29 @@ defmodule ReplivisorTest do
 
   end
 
-  test "change handler" do
+  test "change handler deleted doc" do
         change_entry = ChangeEntry.new()
         couchdbs = Config.databases
         couchdb = Enum.at! couchdbs, 0
-        Replivisor.Changehandler.handle_change(couchdb, change_entry)
+        deleted = true
+        result = Replivisor.Changehandler.revision_present_target_db(couchdb, deleted, change_entry)
+        assert result == true
+  end
+
+  test "change handler target rev up to date" do
+  
+        target_rev = "3-foo"
+        source_rev = "4-foo"
+        assert  Replivisor.Changehandler.is_target_rev_uptodate(target_rev, source_rev) == false 
+  
+        target_rev = "4-foo"
+        source_rev = "4-foo"
+        assert  Replivisor.Changehandler.is_target_rev_uptodate(target_rev, source_rev) == true
+
+        target_rev = "5-foo"
+        source_rev = "4-foo"
+        assert  Replivisor.Changehandler.is_target_rev_uptodate(target_rev, source_rev) == true
+
   end
 
 
