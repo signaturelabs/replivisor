@@ -42,9 +42,12 @@ defmodule Replivisor.Couchbeam do
 		couchdb = couchdb.couchbeam_change_pid(change_pid)
 	end
 
+	def lookup_revision_from_docid(db, doc_id) do
+		lookup_field_from_docid(db, "_rev", doc_id)
+	end
+
 	def lookup_field_from_docid(db, fieldname, doc_id) do
 		doc_lookup_result = :couchbeam.open_doc(db, doc_id)
-		IO.puts "doc_lookup_result: #{inspect(doc_lookup_result)}"
 		case doc_lookup_result do 
 			{:ok, doc} ->
 			        :couchbeam_doc.get_value(fieldname, doc)

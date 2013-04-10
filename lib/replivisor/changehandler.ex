@@ -1,10 +1,11 @@
 defmodule Replivisor.Changehandler do
 	alias Replivisor.Change, as: Change
 	alias Replivisor.Change.ChangeEntry, as: ChangeEntry
+	alias Replivisor.Couchbeam, as: Couchbeam
 
 	def handle_change(couchdb, change_entry) do
 		IO.puts "handle_change called with couchdb: #{inspect(couchdb)} change_entry: #{inspect(change_entry)}"
-		:timer.sleep(30000)
+		:timer.sleep(5000)
 		IO.puts "wakeup after sleep"
 		
 		is_present = revision_present_target_db(couchdb, change_entry.deleted, change_entry)
@@ -29,10 +30,20 @@ defmodule Replivisor.Changehandler do
 	end
 
 	def latest_rev_target_db(couchdb, doc_id) do
-		:whatever
+		{server, db} = Couchbeam.init_db(couchdb.target_url, couchdb.target_port, couchdb.target_dbname)
+		Couchbeam.lookup_revision_from_docid(db, doc_id)
+	end
+
+	def is_target_rev_uptodate(nil, source_rev) do
+		false
+	end
+
+	def is_target_rev_uptodate(:undefined, source_rev) do
+		false
 	end
 
 	def is_target_rev_uptodate(target_rev, source_rev) do
+		IO.puts "is_target_rev_uptodate called, target_rev: #{inspect(target_rev)} source_rev: #{inspect(source_rev)}"
 		[head|tail] = String.split(target_rev, "-") 
 		target_rev_number = binary_to_integer(head)
 		[head|tail] = String.split(source_rev, "-")
