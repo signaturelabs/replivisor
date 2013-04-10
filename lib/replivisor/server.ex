@@ -21,17 +21,10 @@ defmodule Replivisor.Server do
 	end
 
 	def handle_info(msg, statehash) do
-		# example msg
-		# {:change,#Reference<0.0.0.535>,
-		# {[{"seq",13182},{"id","00175475-1292-419A-B0C6-B1D457F29528"},{"changes",[{[{"rev","8-2eb257db8a15ada29cfda2eabe3b695d"}]}]}]}}
-
-		IO.puts "handle_info called with: #{inspect(msg)}"
 
 		{:change, ref, raw_change} = msg
 		couchdb = HashDict.get(statehash, ref)
 		change_entry = Change.create_change_entry(raw_change)
-
-		IO.puts "couchdb: #{inspect(couchdb)} change_entry: #{inspect(change_entry)}"
 
 		spawn fn ->
 		       Replivisor.Changehandler.handle_change(couchdb, change_entry)		      
