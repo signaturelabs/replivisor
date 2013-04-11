@@ -10,7 +10,6 @@ In our case, the impetus to build this tool came out of this scenario:
 * New data was no longer making it to IrisCouch
 * In the \_replicator database on Cloudant, the replication state was <code>triggered</code>, so our existing monitoring did not detect the issue.
 
-
 ## How replivisor attempts to solve the problem
 
 Replivisor monitors CouchDB replications _from the outside_.  It watches the changes feed of both the source and the target databases, and makes sure that documents are making it to the target within a reasonable amount of time as defined by a threshold.
@@ -57,12 +56,15 @@ Copy the config.json.example to config.json and edit to add the couchdb's you wa
 
 ```
 $ iex -S mix
-iex> Replivisor.Server.start_link
 ```
+
+This will start the replivisor application and drop you in an iex shell.  There will be some console output that can be ignored (debug junk).  The meaningful output is in the logs.
 
 ## Replivisor logs
 
-Currently a lot of noise, but anytime you see:
+Log messages are sent to output.txt in the root of the replivisor directory.
+
+Anytime you see:
 
 ```
 *** Error, change not detected on target: […]
@@ -79,3 +81,13 @@ There are a million different ways to setup alerts.  One easy way would be to si
 ## Known Issues
 
 - "the dependency does not match the specified version" - fix: update the dependency version in mix.exs to match (root fix still pending)
+
+## TODO
+
+- Needs more reliability measures (currently does not have a supervisor process)
+
+- Use Lager for logging
+
+- Make logging configurable
+
+- Handle deleted documents
