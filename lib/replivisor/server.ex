@@ -8,7 +8,7 @@ defmodule Replivisor.Server do
 		:gen_server.start_link({:local, __MODULE__}, __MODULE__, HashDict.new, [])	
 	end
 
-	def init(statehash) do
+	def init(_statehash) do
 
 		# get the list of dbs we need to monitor from config
 		couchdbs = Config.databases		

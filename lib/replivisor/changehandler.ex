@@ -19,7 +19,7 @@ defmodule Replivisor.Changehandler do
 		end
         end
 
-	def revision_present_target_db(couchdb, true, change_entry) do
+	def revision_present_target_db(_couchdb, true, _change_entry) do
 		# TODO: fix this to handle deleted records
 		true
 	end
@@ -30,7 +30,7 @@ defmodule Replivisor.Changehandler do
 	end
 
 	def latest_rev_target_db(couchdb, doc_id) do
-		{server, db} = Couchbeam.init_db(couchdb.target_url, 
+		{_server, db} = Couchbeam.init_db(couchdb.target_url, 
                                                  couchdb.target_port, 
 		                                 couchdb.target_dbname,
 		                                 couchdb.target_username,
@@ -38,19 +38,19 @@ defmodule Replivisor.Changehandler do
 		Couchbeam.lookup_revision_from_docid(db, doc_id)
 	end
 
-	def is_target_rev_uptodate(nil, source_rev) do
+	def is_target_rev_uptodate(nil, _source_rev) do
 		false
 	end
 
-	def is_target_rev_uptodate(:undefined, source_rev) do
+	def is_target_rev_uptodate(:undefined, _source_rev) do
 		false
 	end
 
 	def is_target_rev_uptodate(target_rev, source_rev) do
 		IO.puts "is_target_rev_uptodate called, target_rev: #{inspect(target_rev)} source_rev: #{inspect(source_rev)}"
-		[head|tail] = String.split(target_rev, "-") 
+		[head|_] = String.split(target_rev, "-") 
 		target_rev_number = binary_to_integer(head)
-		[head|tail] = String.split(source_rev, "-")
+		[head|_] = String.split(source_rev, "-")
 		source_rev_number = binary_to_integer(head)
 		target_rev_number >= source_rev_number
 	end
