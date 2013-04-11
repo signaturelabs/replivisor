@@ -11,12 +11,20 @@ defmodule Replivisor.Changehandler do
 		is_present = revision_present_target_db(couchdb, change_entry.deleted, change_entry)
 		case is_present do
 			true ->
-			       IO.puts "Change was detected on target db: #{change_entry.doc_id}-#{change_entry.doc_rev}"
+                               msg = "Change was detected on target db: #{change_entry.doc_id}@#{change_entry.doc_rev}"
+			       log(msg)
 			false ->
-			       IO.puts "*** Error, change not detected on target: #{inspect(couchdb)} change_entry: #{inspect(change_entry)}"
+			       msg = "*** Error, change not detected on target: #{inspect(couchdb)} change_entry: #{inspect(change_entry)}"
+			       log(msg)
  			_ ->
-			       IO.puts "*** Error, unexpected result"
+			       msg = "*** Error, unexpected result"
+			       log(msg)
 		end
+        end
+
+        def log(msg) do
+		:file.write_file("output.txt", msg, [:append])
+                IO.puts msg                
         end
 
 	def revision_present_target_db(_couchdb, true, _change_entry) do
