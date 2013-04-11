@@ -54,6 +54,8 @@ $ mix test
 
 ## Run replivisor
 
+Copy the config.json.example to config.json and edit to add the couchdb's you want to monitor.
+
 ```
 $ iex -S mix
 iex> Replivisor.Server.start_link
@@ -74,3 +76,7 @@ this means a change was not propagated to the target couchdb within the expected
 In order to avoid re-inventing the wheel and in the name of keeping things focused and modular, replivisor does not have any built-in functionality for triggering alerts.  All it does is log to stdout.
 
 There are a million different ways to setup alerts.  One easy way would be to sign up for your favorite logging-as-a-service such as Loggly or Papertrail, and then send your logs to the service and setup search alerts.  
+
+## Known Issues
+
+- "the dependency does not match the specified version" - fix: update the dependency version in mix.exs to match (root fix still pending)
