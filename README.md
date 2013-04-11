@@ -25,7 +25,6 @@ Replivisor monitors CouchDB replications _from the outside_.  It watches the cha
 
 ## Limitations
 
-* Does not handle auth (still a work in progress)
 * Currently ignores deleted documents
 * Replivisor is not smart enough to monitor _filtered replications_.
 
