@@ -13,8 +13,8 @@ defmodule ReplivisorTest do
 	
 	couchdbs = Config.databases
 	server_pid = self
-	statehash = Couchbeam.monitor_couchdb_list(server_pid, couchdbs)
-	IO.puts "statehash: #{inspect(statehash)}"
+	#statehash = Couchbeam.monitor_couchdb_list(server_pid, couchdbs)
+	#IO.puts "statehash: #{inspect(statehash)}"
 
 	couchdb = Enum.at! couchdbs, 0
 	{server, db} = Couchbeam.init_db(couchdb.target_url, 
