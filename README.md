@@ -27,32 +27,25 @@ Replivisor monitors CouchDB replications _from the outside_.  It watches the cha
 * Currently ignores deleted documents
 * Replivisor is not smart enough to monitor _filtered replications_.
 
-## How to use it
+## Install dependency: erlang + elixir
 
-Edit config.ex with the settings of your source and target couch db's
+Replivisor is written in [Elixir](http://elixir-lang.org), and both erlang and elixir will need to be installed.
 
-## Install elixir
-
-On OSX:
-
-```
-$ brew install elixir
-```
-
-See the "elixir-lang website":http://elixir-lang.org/getting_started/1.html for more details.
+See the [Elixir Getting Started Guide](http://elixir-lang.org/getting_started/1.html) for more details.
 
 ## Install replivisor
 
 ```
-$ git clone [replivisor url]
+$ git clone git@github.com:signaturelabs/replivisor.git
 $ mix deps.get
-$ mix compile
 $ mix test
 ```
 
-## Run replivisor
+## Configure replivisor
 
 Copy the config.json.example to config.json and edit to add the couchdb's you want to monitor.
+
+## Run replivisor
 
 ```
 $ iex -S mix
