@@ -4,6 +4,7 @@ defmodule Replivisor.Changehandler do
 	alias Replivisor.Couchbeam, as: Couchbeam
 
 	def handle_change(couchdb, change_entry) do
+		
 		IO.puts "handle_change called with couchdb: #{inspect(couchdb)} change_entry: #{inspect(change_entry)}"
 		:timer.sleep(15000)
 		IO.puts "wakeup after sleep"
@@ -11,22 +12,22 @@ defmodule Replivisor.Changehandler do
 		is_present = revision_present_target_db(couchdb, change_entry.deleted, change_entry)
 		case is_present do
 			true ->
-                               msg = "Change was detected on target db: #{change_entry.doc_id}@#{change_entry.doc_rev}"
-			       log(msg)
+        msg = "Change was detected on target db: #{change_entry.doc_id}@#{change_entry.doc_rev}"
+			  log(msg)
 			false ->
-			       msg = "*** Error, change not detected on target: #{inspect(couchdb)} change_entry: #{inspect(change_entry)}"
-			       log(msg)
+			  msg = "*** Error, change not detected on target: #{inspect(couchdb)} change_entry: #{inspect(change_entry)}"
+			  log(msg)
  			_ ->
-			       msg = "*** Error, unexpected result"
-			       log(msg)
+			  msg = "*** Error, unexpected result"
+			  log(msg)
 		end
-        end
+  end
 
-        def log(msg) do
-                msg = "#{msg}\n"
+  def log(msg) do
+    msg = "#{msg}\n"
 		:file.write_file("output.txt", msg, [:append])
-                IO.puts msg                
-        end
+    IO.puts msg                
+  end
 
 	def revision_present_target_db(_couchdb, true, _change_entry) do
 		# TODO: fix this to handle deleted records
@@ -40,10 +41,10 @@ defmodule Replivisor.Changehandler do
 
 	def latest_rev_target_db(couchdb, doc_id) do
 		{_server, db} = Couchbeam.init_db(couchdb.target_url, 
-                                                 couchdb.target_port, 
-		                                 couchdb.target_dbname,
-		                                 couchdb.target_username,
-		                                 couchdb.target_password)
+																			couchdb.target_port, 
+																		  couchdb.target_dbname, 
+																			couchdb.target_username, 
+																		  couchdb.target_password)
 		Couchbeam.lookup_revision_from_docid(db, doc_id)
 	end
 

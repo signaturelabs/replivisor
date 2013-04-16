@@ -3,11 +3,12 @@ defmodule Replivisor.Couchbeam do
 	def monitor_couchdb_list(server_pid, couchdbs) do
 		couchdbs_hash = HashDict.new
 		f = fn couchdb, couchdbs_hash ->
-		        couchdb = monitor_couchdb(server_pid, couchdb)
-		        key = couchdb.couchbeam_changes_ref
-		        couchdbs_hash = HashDict.put(couchdbs_hash, key, couchdb)
-		        {couchdb, couchdbs_hash}
-	        end
+		         couchdb = monitor_couchdb(server_pid, couchdb)
+		         key = couchdb.couchbeam_changes_ref
+		         couchdbs_hash = HashDict.put(couchdbs_hash, key, couchdb)
+		         {couchdb, couchdbs_hash}
+	      end
+
 		{_, couchdbs_hash} = Enum.map_reduce couchdbs, couchdbs_hash, f
 		couchdbs_hash
 	end
@@ -21,17 +22,17 @@ defmodule Replivisor.Couchbeam do
 
 	def init_source_db(couchdb) do
 		{server, db} = init_db(couchdb.source_url, 
-                                       couchdb.source_port, 
-                                       couchdb.source_dbname,
-                                       couchdb.source_username,
-                                       couchdb.source_password)
+                           couchdb.source_port, 
+                           couchdb.source_dbname,
+                           couchdb.source_username,
+                           couchdb.source_password)
 		couchdb = couchdb.couchbeam_server(server)
 		couchdb = couchdb.couchbeam_db(db)
 		couchdb
 	end
 
 	def init_db(db_url, db_port, dbname, username, password) do
-                if username do 
+    if username do 
 			username_string = binary_to_list(username)  
 			password_string = binary_to_list(password)
 			options = [{:basic_auth, {username_string, password_string}}]
@@ -63,12 +64,11 @@ defmodule Replivisor.Couchbeam do
 		doc_lookup_result = :couchbeam.open_doc(db, doc_id)
 		case doc_lookup_result do 
 			{:ok, doc} ->
-			        :couchbeam_doc.get_value(fieldname, doc)
-                        {:error, _} ->
-			        IO.puts "doc lookup failed for #{doc_id}"
-			        nil
+			  :couchbeam_doc.get_value(fieldname, doc)
+      {:error, _} ->
+			  IO.puts "doc lookup failed for #{doc_id}"
+			  nil
 		end
 	end
-
 
 end

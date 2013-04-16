@@ -1,4 +1,5 @@
 defmodule Replivisor.Server do
+
 	use GenServer.Behaviour
 	alias Replivisor.Config, as: Config
 	alias Replivisor.Change, as: Change
@@ -18,6 +19,7 @@ defmodule Replivisor.Server do
 		statehash = Replivisor.Couchbeam.monitor_couchdb_list(server_pid, couchdbs)
 
 		{ :ok, statehash }
+
 	end
 
 	def handle_info(msg, statehash) do
@@ -31,6 +33,7 @@ defmodule Replivisor.Server do
 	        end
 
 		{ :noreply, statehash }
+	
 	end
 
 
