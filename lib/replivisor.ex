@@ -1,8 +1,8 @@
 defmodule Replivisor do
 	use Application.Behaviour
 	
-	def start(_, _) do
-		Replivisor.Server.start_link
+	def start(_type, args) do
+    Replivisor.Supervisor.start_link(args)
 	end
 
 end

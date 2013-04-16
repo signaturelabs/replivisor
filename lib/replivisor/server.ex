@@ -5,7 +5,7 @@ defmodule Replivisor.Server do
 	alias Replivisor.Change, as: Change
 	alias Replivisor.Change.ChangeEntry, as: ChangeEntry
 
-	def start_link do
+	def start_link(_args) do
 		:gen_server.start_link({:local, __MODULE__}, __MODULE__, HashDict.new, [])	
 	end
 
