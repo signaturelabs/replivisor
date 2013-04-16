@@ -22,9 +22,8 @@ defmodule Replivisor.Server do
 
 	end
 
-	def handle_info(msg, statehash) do
+	def handle_info({:change, ref, raw_change}, statehash) do
 
-		{:change, ref, raw_change} = msg
 		couchdb = HashDict.get(statehash, ref)
 		change_entry = Change.create_change_entry(raw_change)
 
@@ -36,5 +35,9 @@ defmodule Replivisor.Server do
 	
 	end
 
+	def handle_info(msg, statehash) do
+		IO.puts "unknown message: #{inspect(msg)}, calling exit()"
+		:erlang.exit(:shutdown)  # handle uknnown messages by crashing
+	end
 
 end
