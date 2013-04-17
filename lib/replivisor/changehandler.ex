@@ -15,7 +15,7 @@ defmodule Replivisor.Changehandler do
         msg = "Change was detected on target db: #{change_entry.doc_id}@#{change_entry.doc_rev}"
 			  log(msg)
 			false ->
-			  msg = "*** Error, change not detected on target.  change_entry: #{inspect(change_entry)} doc: #{change_entry.doc_id}@#{change_entry.doc_rev}"
+			  msg = "*** Error, change not detected on target db: #{inspect(couchdb)}  change_entry: #{inspect(change_entry)}"
 			  log(msg)
  			_ ->
 			  msg = "*** Error, unexpected result"
