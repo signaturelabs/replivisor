@@ -6,7 +6,7 @@ defmodule Replivisor.Changehandler do
 	def handle_change(couchdb, change_entry) do
 		
 		IO.puts "handle_change called with couchdb: #{inspect(couchdb)} change_entry: #{inspect(change_entry)}"
-		:timer.sleep(15000)
+		:timer.sleep(30000)
 		IO.puts "wakeup after sleep"
 		
 		is_present = revision_present_target_db(couchdb, change_entry.deleted, change_entry)
