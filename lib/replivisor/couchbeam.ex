@@ -65,8 +65,8 @@ defmodule Replivisor.Couchbeam do
 		case doc_lookup_result do 
 			{:ok, doc} ->
 			  :couchbeam_doc.get_value(fieldname, doc)
-      {:error, _} ->
-			  IO.puts "doc lookup failed for #{doc_id}"
+      {:error, error} ->
+			  IO.puts "doc lookup failed for #{doc_id}.  error: #{inspect(error)}"
 			  nil
 		end
 	end
